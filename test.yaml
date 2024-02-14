@@ -1,0 +1,21 @@
+---
+- name: Create S3
+  hosts: localhost
+  vars:
+    encryption_type: "AES256"
+  tasks:
+    - name: Create S3 Bucket
+      amazon.aws.s3_bucket:
+        name: testbuckofthefuture  
+        state: present
+        encryption: "{{ encryption_type }}"
+        region: us-east-1
+        #versioning: true
+        force: true
+        session_token:
+        aws_config:
+           signature_version: s3v4
+           s3: 
+            payload_signing_enabled: true
+        validate_certs: false
+        
